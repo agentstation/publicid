@@ -35,10 +35,7 @@ import "github.com/agentstation/publicid"
 2. Generate a short public ID (8 characters):
 
 ```go
-id, err := publicid.New()
-if err != nil {
-    log.Fatalf("Failed to generate public ID: %v", err)
-}
+id, _ := publicid.New()
 fmt.Println("Generated short public ID:", id)
 // Output: Generated short public ID: Ab3xY9pQ
 ```
@@ -46,10 +43,7 @@ fmt.Println("Generated short public ID:", id)
 3. Generate a long public ID (12 characters):
 
 ```go
-longID, err := publicid.NewLong()
-if err != nil {
-    log.Fatalf("Failed to generate long public ID: %v", err)
-}
+longID, _ := publicid.NewLong()
 fmt.Println("Generated long public ID:", longID)
 // Output: Generated long public ID: 7Zt3xY9pQr5W
 ```
@@ -57,12 +51,9 @@ fmt.Println("Generated long public ID:", longID)
 4. Use the `Attempts` option to specify the number of generation attempts:
 
 ```go
-id, err := publicid.New(publicid.Attempts(5))
-if err != nil {
-    log.Fatalf("Failed to generate public ID: %v", err)
-}
-fmt.Println("Generated public ID with 5 attempts:", id)
-// Output: Generated public ID with 5 attempts: Kj2mN8qL
+id, _ := publicid.New(publicid.Attempts(5))
+fmt.Println("Generated public ID within 5 attempts:", id)
+// Output: Generated public ID within 5 attempts: Kj2mN8qL
 ```
 
 5. Validate a short public ID:
