@@ -41,7 +41,7 @@ func TestLong(t *testing.T) {
 	if len(id) != 12 {
 		t.Errorf("Long() returned id with length %d, want 12", len(id))
 	}
-	if err := ValidateLong("TestLong", id); err != nil {
+	if err := ValidateLong(id); err != nil {
 		t.Errorf("Long() returned invalid id: %v", err)
 	}
 }
@@ -54,7 +54,7 @@ func TestLongWithAttempts(t *testing.T) {
 	if len(id) != 12 {
 		t.Errorf("Long(Attempts(5)) returned id with length %d, want 12", len(id))
 	}
-	if err := ValidateLong("TestLongWithAttempts", id); err != nil {
+	if err := ValidateLong(id); err != nil {
 		t.Errorf("Long(Attempts(5)) returned invalid id: %v", err)
 	}
 }
@@ -97,7 +97,7 @@ func TestValidateLong(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			err := ValidateLong("TestValidateLong", tc.id)
+			err := ValidateLong(tc.id)
 			if (err != nil) != tc.wantError {
 				t.Errorf("ValidateLong() error = %v, wantError %v", err, tc.wantError)
 			}

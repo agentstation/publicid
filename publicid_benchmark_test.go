@@ -63,7 +63,7 @@ func BenchmarkValidateLong(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		err := publicid.ValidateLong("BenchmarkValidateLong", id)
+		err := publicid.ValidateLong(id)
 		if err != nil {
 			b.Fatal(err)
 		}

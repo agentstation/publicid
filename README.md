@@ -142,7 +142,7 @@ Validate checks if a given field name's public ID value is valid according to th
 ## func [ValidateLong](<https://github.com/agentstation/publicid/blob/main/publicid.go#L66>)
 
 ```go
-func ValidateLong(fieldName, id string) error
+func ValidateLong(, id string) error
 ```
 
 validateLong checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
