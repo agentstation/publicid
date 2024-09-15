@@ -73,7 +73,7 @@ if err != nil {
 
 ```go
 longID := "7Zt3xY9pQr5W"
-err := publicid.ValidateLong("exampleField", longID)
+err := publicid.ValidateLong(longID)
 if err != nil {
     fmt.Println("Invalid long ID:", err)
 } else {
