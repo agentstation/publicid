@@ -7,7 +7,7 @@
 ```
 <!-- [![Sourcegraph](https://sourcegraph.com/github.com/agentstation/publicid/-/badge.svg?style=flat-square)](https://sourcegraph.com/github.com/agentstation/publicid?badge) -->
 [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://pkg.go.dev/github.com/agentstation/publicid)
-[![Go Report Card](https://goreportcard.com/badge/github.com/agentstation/publicid?style=flat-square)](https://goreportcard.com/report/github.com/agentstation/publicid)
+[![Go Report Card](https://goreportcard.com/badge/github.com/agentstation/publicid?style=flat-square&cache=break)](https://goreportcard.com/report/github.com/agentstation/publicid)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/agentstation/publicid/ci.yaml?style=flat-square)](https://github.com/agentstation/publicid/actions)
 [![codecov](https://codecov.io/gh/agentstation/publicid/branch/master/graph/badge.svg?token=35UM5QX1Q3)](https://codecov.io/gh/agentstation/publicid)
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/agentstation/publicid/master/LICENSE)
