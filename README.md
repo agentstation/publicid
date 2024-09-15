@@ -106,7 +106,7 @@ import "github.com/agentstation/publicid"
 - [func New\(opts ...Option\) \(string, error\)](<#New>)
 - [func NewLong\(opts ...Option\) \(string, error\)](<#NewLong>)
 - [func Validate\(id string\) error](<#Validate>)
-- [func ValidateLong\(fieldName, id string\) error](<#ValidateLong>)
+- [func ValidateLong\(id string\) error](<#ValidateLong>)
 - [type Option](<#Option>)
   - [func Attempts\(n int\) Option](<#Attempts>)
 
@@ -142,7 +142,7 @@ Validate checks if a given field name's public ID value is valid according to th
 ## func [ValidateLong](<https://github.com/agentstation/publicid/blob/main/publicid.go#L66>)
 
 ```go
-func ValidateLong(, id string) error
+func ValidateLong(id string) error
 ```
 
 validateLong checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
