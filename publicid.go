@@ -23,12 +23,28 @@ type Option func(*config)
 // config holds the configuration for ID generation.
 type config struct {
 	attempts int
+	length   int
+	alphabet string
 }
 
 // Attempts returns an Option to set the number of attempts for ID generation.
 func Attempts(n int) Option {
 	return func(c *config) {
 		c.attempts = n
+	}
+}
+
+// Len returns an Option to set the length of the ID to be generated.
+func Len(n int) Option {
+	return func(c *config) {
+		c.length = n
+	}
+}
+
+// Alphabet returns an Option to set the alphabet to be used for ID generation.
+func Alphabet(a string) Option {
+	return func(c *config) {
+		c.alphabet = a
 	}
 }
 
@@ -41,14 +57,14 @@ func NewLong(opts ...Option) (string, error) { return generateID(longLen, opts..
 // generateID is a helper function to generate IDs with the given length and options.
 func generateID(length int, opts ...Option) (string, error) {
 	// set default configuration values
-	cfg := &config{attempts: 1}
+	cfg := &config{attempts: 1, length: length, alphabet: alphabet}
 	for _, opt := range opts {
 		opt(cfg)
 	}
 	// try to generate the ID
 	var lastErr error
 	for i := 0; i < cfg.attempts; i++ {
-		id, err := generator(alphabet, length)
+		id, err := generator(cfg.alphabet, cfg.length)
 		if err == nil {
 			return id, nil
 		}
