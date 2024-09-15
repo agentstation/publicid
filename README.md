@@ -16,6 +16,37 @@
 
 The `publicid` package generates and validates NanoID strings designed to be publicly exposed.
 
+## Design Goals and Architecture
+
+The `publicid` package is designed to generate and validate unique, public-facing identifiers with a focus on simplicity, efficiency, and usability. Key design decisions include:
+
+### Alphabet Choice
+
+- Uses a 62-character alphabet: `0-9`, `A-Z`, and `a-z`
+- Excludes special characters like `_` and `-` to maintain a clean "block of characters" visual concept
+- Prioritizes easy copy-paste functionality, assuming this as the most common use case
+
+### ID Lengths
+
+- Default/Short IDs: 8 characters
+- Long IDs: 12 characters
+
+### Collision Resistance
+
+- Default/Short IDs: 1% collision probability after generating 8 billion IDs at 25 IDs/hour (~10 years)
+- Long IDs: 1% collision probability after generating 8 billion IDs at 25 IDs/second (~10 years)
+
+### Key Features
+
+1. Simplicity: Easy to generate and validate IDs
+2. URL-friendly: Suitable for use in web applications
+3. Configurable: Options for ID length and generation attempts
+4. Efficient: Fast generation and validation processes
+
+These design choices aim to balance uniqueness, readability, and practical usage in modern web applications. The package is particularly suited for scenarios requiring public-facing, easy-to-share identifiers with a low risk of collisions.
+
+For a detailed analysis of collision probabilities, refer to the [NanoID Collision Calculator](https://zelark.github.io/nano-id-cc/).
+
 ## Installation
 
 ```sh
@@ -114,7 +145,7 @@ func New(opts ...Option) (string, error)
 New generates a unique nanoID with a length of 8 characters and the given options.
 
 <a name="NewLong"></a>
-## func [NewLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L41>)
+## func [NewLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L39>)
 
 ```go
 func NewLong(opts ...Option) (string, error)
@@ -123,7 +154,7 @@ func NewLong(opts ...Option) (string, error)
 NewLong generates a unique nanoID with a length of 12 characters and the given options.
 
 <a name="Validate"></a>
-## func [Validate](<https://github.com/agentstation/publicid/blob/master/publicid.go#L65>)
+## func [Validate](<https://github.com/agentstation/publicid/blob/master/publicid.go#L63>)
 
 ```go
 func Validate(id string) error
@@ -132,7 +163,7 @@ func Validate(id string) error
 Validate checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
 
 <a name="ValidateLong"></a>
-## func [ValidateLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L71>)
+## func [ValidateLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L67>)
 
 ```go
 func ValidateLong(id string) error

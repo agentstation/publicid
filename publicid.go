@@ -33,22 +33,19 @@ func Attempts(n int) Option {
 }
 
 // New generates a unique nanoID with a length of 8 characters and the given options.
-func New(opts ...Option) (string, error) {
-	return generateID(shortLen, opts...)
-}
+func New(opts ...Option) (string, error) { return generateID(shortLen, opts...) }
 
 // NewLong generates a unique nanoID with a length of 12 characters and the given options.
-func NewLong(opts ...Option) (string, error) {
-	return generateID(longLen, opts...)
-}
+func NewLong(opts ...Option) (string, error) { return generateID(longLen, opts...) }
 
 // generateID is a helper function to generate IDs with the given length and options.
 func generateID(length int, opts ...Option) (string, error) {
+	// set default configuration values
 	cfg := &config{attempts: 1}
 	for _, opt := range opts {
 		opt(cfg)
 	}
-
+	// try to generate the ID
 	var lastErr error
 	for i := 0; i < cfg.attempts; i++ {
 		id, err := generator(alphabet, length)
@@ -57,40 +54,35 @@ func generateID(length int, opts ...Option) (string, error) {
 		}
 		lastErr = err
 	}
+	// if we get here, we failed to generate an ID
 	return "", fmt.Errorf("failed to generate ID after %d attempts: %w", cfg.attempts, lastErr)
 }
 
 // Validate checks if a given field name's public ID value is valid according to
 // the constraints defined by package publicid.
-func Validate(id string) error {
-	return validate(id, shortLen)
-}
+func Validate(id string) error { return validate(id, shortLen) }
 
 // validateLong checks if a given field name's public ID value is valid according to
 // the constraints defined by package publicid.
-func ValidateLong(id string) error {
-	return validate(id, longLen)
-}
+func ValidateLong(id string) error { return validate(id, longLen) }
 
 // validate checks if a given public ID value is valid.
 func validate(id string, expectedLen int) error {
-	if id == "" {
+	if id == "" { // if the ID is empty, it's not valid
 		return fmt.Errorf("public ID is empty")
 	}
-	if len(id) != expectedLen {
+	if len(id) != expectedLen { // if the ID is not the expected length, it's not valid
 		return fmt.Errorf("public ID has length %d, want %d", len(id), expectedLen)
 	}
 	for _, char := range id {
-		if !isValidChar(char) {
+		if !isValidChar(char) { // if the ID contains an invalid character, it's not valid
 			return fmt.Errorf("public ID contains invalid character: %c", char)
 		}
 	}
-	return nil
+	return nil // if we get here, the ID is valid
 }
 
 // isValidChar checks if a given character is a valid public ID character.
 func isValidChar(c rune) bool {
-	return (c >= '0' && c <= '9') ||
-		(c >= 'A' && c <= 'Z') ||
-		(c >= 'a' && c <= 'z')
+	return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
 }
