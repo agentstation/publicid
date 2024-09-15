@@ -91,8 +91,6 @@ if err != nil {
 // Output: Valid long ID: 7Zt3xY9pQr5W
 ```
 
-These examples demonstrate how to generate, use, and validate both short (8-character) and long (12-character) public IDs using the `publicid` package.
-
 ## Makefile
 
 ```sh
