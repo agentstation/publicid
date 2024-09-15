@@ -101,6 +101,10 @@ if err != nil {
 import "github.com/agentstation/publicid"
 ```
 
+Package publicid generates and validates NanoID strings designed to be publicly exposed.
+
+The publicid package generates and validates NanoID strings designed to be publicly exposed. It uses the nanoid library to generate IDs and provides options to configure the generation process.
+
 ## Index
 
 - [func New\(opts ...Option\) \(string, error\)](<#New>)
@@ -112,7 +116,7 @@ import "github.com/agentstation/publicid"
 
 
 <a name="New"></a>
-## func [New](<https://github.com/agentstation/publicid/blob/master/publicid.go#L31>)
+## func [New](<https://github.com/agentstation/publicid/blob/master/publicid.go#L35>)
 
 ```go
 func New(opts ...Option) (string, error)
@@ -121,7 +125,7 @@ func New(opts ...Option) (string, error)
 New generates a unique nanoID with a length of 8 characters and the given options.
 
 <a name="NewLong"></a>
-## func [NewLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L36>)
+## func [NewLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L40>)
 
 ```go
 func NewLong(opts ...Option) (string, error)
@@ -130,7 +134,7 @@ func NewLong(opts ...Option) (string, error)
 NewLong generates a unique nanoID with a length of 12 characters and the given options.
 
 <a name="Validate"></a>
-## func [Validate](<https://github.com/agentstation/publicid/blob/master/publicid.go#L60>)
+## func [Validate](<https://github.com/agentstation/publicid/blob/master/publicid.go#L64>)
 
 ```go
 func Validate(id string) error
@@ -139,7 +143,7 @@ func Validate(id string) error
 Validate checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
 
 <a name="ValidateLong"></a>
-## func [ValidateLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L66>)
+## func [ValidateLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L70>)
 
 ```go
 func ValidateLong(id string) error
@@ -148,7 +152,7 @@ func ValidateLong(id string) error
 validateLong checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
 
 <a name="Option"></a>
-## type [Option](<https://github.com/agentstation/publicid/blob/master/publicid.go#L16>)
+## type [Option](<https://github.com/agentstation/publicid/blob/master/publicid.go#L20>)
 
 Option is a function type for configuring ID generation.
 
@@ -157,7 +161,7 @@ type Option func(*config)
 ```
 
 <a name="Attempts"></a>
-### func [Attempts](<https://github.com/agentstation/publicid/blob/master/publicid.go#L24>)
+### func [Attempts](<https://github.com/agentstation/publicid/blob/master/publicid.go#L28>)
 
 ```go
 func Attempts(n int) Option

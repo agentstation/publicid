@@ -1,3 +1,7 @@
+// Package publicid generates and validates NanoID strings designed to be publicly exposed.
+//
+// The publicid package generates and validates NanoID strings designed to be publicly exposed.
+// It uses the nanoid library to generate IDs and provides options to configure the generation process.
 package publicid
 
 import (
