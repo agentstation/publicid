@@ -116,7 +116,7 @@ The publicid package generates and validates NanoID strings designed to be publi
 
 
 <a name="New"></a>
-## func [New](<https://github.com/agentstation/publicid/blob/master/publicid.go#L35>)
+## func [New](<https://github.com/agentstation/publicid/blob/master/publicid.go#L38>)
 
 ```go
 func New(opts ...Option) (string, error)
@@ -125,7 +125,7 @@ func New(opts ...Option) (string, error)
 New generates a unique nanoID with a length of 8 characters and the given options.
 
 <a name="NewLong"></a>
-## func [NewLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L40>)
+## func [NewLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L43>)
 
 ```go
 func NewLong(opts ...Option) (string, error)
@@ -134,7 +134,7 @@ func NewLong(opts ...Option) (string, error)
 NewLong generates a unique nanoID with a length of 12 characters and the given options.
 
 <a name="Validate"></a>
-## func [Validate](<https://github.com/agentstation/publicid/blob/master/publicid.go#L64>)
+## func [Validate](<https://github.com/agentstation/publicid/blob/master/publicid.go#L67>)
 
 ```go
 func Validate(id string) error
@@ -143,7 +143,7 @@ func Validate(id string) error
 Validate checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
 
 <a name="ValidateLong"></a>
-## func [ValidateLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L70>)
+## func [ValidateLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L73>)
 
 ```go
 func ValidateLong(id string) error
@@ -152,7 +152,7 @@ func ValidateLong(id string) error
 validateLong checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
 
 <a name="Option"></a>
-## type [Option](<https://github.com/agentstation/publicid/blob/master/publicid.go#L20>)
+## type [Option](<https://github.com/agentstation/publicid/blob/master/publicid.go#L23>)
 
 Option is a function type for configuring ID generation.
 
@@ -161,7 +161,7 @@ type Option func(*config)
 ```
 
 <a name="Attempts"></a>
-### func [Attempts](<https://github.com/agentstation/publicid/blob/master/publicid.go#L28>)
+### func [Attempts](<https://github.com/agentstation/publicid/blob/master/publicid.go#L31>)
 
 ```go
 func Attempts(n int) Option

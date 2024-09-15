@@ -4,6 +4,7 @@
 package publicid
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -102,5 +103,29 @@ func TestValidateLong(t *testing.T) {
 				t.Errorf("ValidateLong() error = %v, wantError %v", err, tc.wantError)
 			}
 		})
+	}
+}
+
+func TestNewFailsAfterAttempts(t *testing.T) {
+
+	// generator functions for testing
+	nanoIDGenerator := generator
+	mockGenerator := func(alphabet string, size int) (string, error) {
+		return "", fmt.Errorf("mocked error")
+	}
+
+	// Replace the Generate function with our mock generator function,
+	// and restore the original generator function in the deferred function.
+	generator = mockGenerator
+	defer func() { generator = nanoIDGenerator }()
+
+	_, err := New(Attempts(3))
+	if err == nil {
+		t.Error("Expected an error, but got nil")
+	} else {
+		expectedErrMsg := "failed to generate ID after 3 attempts: mocked error"
+		if err.Error() != expectedErrMsg {
+			t.Errorf("Expected error message '%s', but got '%s'", expectedErrMsg, err.Error())
+		}
 	}
 }

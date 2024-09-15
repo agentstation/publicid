@@ -16,6 +16,9 @@ const (
 	shortLen = 8
 )
 
+// generator is the function used to generate nanoIDs.
+var generator = nanoid.Generate
+
 // Option is a function type for configuring ID generation.
 type Option func(*config)
 
@@ -50,7 +53,7 @@ func generateID(length int, opts ...Option) (string, error) {
 
 	var lastErr error
 	for i := 0; i < cfg.attempts; i++ {
-		id, err := nanoid.Generate(alphabet, length)
+		id, err := generator(alphabet, length)
 		if err == nil {
 			return id, nil
 		}
