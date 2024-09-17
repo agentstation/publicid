@@ -66,9 +66,6 @@ func Alphabet(a string) Option {
 // New generates a unique nanoID with a length of 8 characters and the given options.
 func New(opts ...Option) (string, error) { return generateID(DefaultIDLength, opts...) }
 
-// NewLong generates a unique nanoID with a length of 12 characters and the given options.
-func NewLong(opts ...Option) (string, error) { return generateID(LongIDLength, opts...) }
-
 // generateID is a helper function to generate IDs with the given length and options.
 func generateID(len int, opts ...Option) (string, error) {
 	// set default configuration values
@@ -91,11 +88,7 @@ func generateID(len int, opts ...Option) (string, error) {
 
 // Validate checks if a given field name's public ID value is valid according to
 // the constraints defined by package publicid.
-func Validate(id string) error { return validate(id, DefaultIDLength) }
-
-// validateLong checks if a given field name's public ID value is valid according to
-// the constraints defined by package publicid.
-func ValidateLong(id string) error { return validate(id, LongIDLength) }
+func Validate(id string, opts ...Option) error { return validate(id, opts...) }
 
 // isValidChar checks if a given character is a valid public ID character.
 func isValidChar(c rune) bool {
@@ -103,12 +96,16 @@ func isValidChar(c rune) bool {
 }
 
 // validate checks if a given public ID value is valid.
-func validate(id string, expectedLen int) error {
+func validate(id string, opts ...Option) error {
 	if id == "" { // if the ID is empty, it's not valid
 		return fmt.Errorf("public ID is empty")
 	}
-	if len(id) != expectedLen { // if the ID is not the expected length, it's not valid
-		return fmt.Errorf("public ID has length %d, want %d", len(id), expectedLen)
+	cfg := &config{length: DefaultIDLength}
+	for _, opt := range opts {
+		opt(cfg)
+	}
+	if len(id) != cfg.length { // if the ID is not the expected length, it's not valid
+		return fmt.Errorf("public ID has length %d, want %d", len(id), cfg.length)
 	}
 	for _, char := range id {
 		if !isValidChar(char) { // if the ID contains an invalid character, it's not valid

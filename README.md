@@ -74,7 +74,7 @@ fmt.Println("Generated default public ID:", id)
 3. Generate a long public ID (12 characters):
 
 ```go
-longID, _ := publicid.NewLong()
+longID, _ := publicid.New(publicid.Long())
 fmt.Println("Generated long public ID:", longID)
 // Output: Generated long public ID: 7Zt3xY9pQr5W
 ```
@@ -104,7 +104,7 @@ if err != nil {
 
 ```go
 longID := "7Zt3xY9pQr5W"
-err := publicid.ValidateLong(longID)
+err := publicid.Validate(longID, publicid.Long())
 if err != nil {
     fmt.Println("Invalid long ID:", err)
 } else {
@@ -129,9 +129,7 @@ Package publicid generates and validates NanoID strings designed to be publicly 
 
 - [Constants](<#constants>)
 - [func New\(opts ...Option\) \(string, error\)](<#New>)
-- [func NewLong\(opts ...Option\) \(string, error\)](<#NewLong>)
-- [func Validate\(id string\) error](<#Validate>)
-- [func ValidateLong\(id string\) error](<#ValidateLong>)
+- [func Validate\(id string, opts ...Option\) error](<#Validate>)
 - [type Option](<#Option>)
   - [func Alphabet\(a string\) Option](<#Alphabet>)
   - [func Attempts\(n int\) Option](<#Attempts>)
@@ -170,32 +168,14 @@ func New(opts ...Option) (string, error)
 
 New generates a unique nanoID with a length of 8 characters and the given options.
 
-<a name="NewLong"></a>
-## func [NewLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L70>)
-
-```go
-func NewLong(opts ...Option) (string, error)
-```
-
-NewLong generates a unique nanoID with a length of 12 characters and the given options.
-
 <a name="Validate"></a>
-## func [Validate](<https://github.com/agentstation/publicid/blob/master/publicid.go#L94>)
+## func [Validate](<https://github.com/agentstation/publicid/blob/master/publicid.go#L91>)
 
 ```go
-func Validate(id string) error
+func Validate(id string, opts ...Option) error
 ```
 
 Validate checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
-
-<a name="ValidateLong"></a>
-## func [ValidateLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L98>)
-
-```go
-func ValidateLong(id string) error
-```
-
-validateLong checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
 
 <a name="Option"></a>
 ## type [Option](<https://github.com/agentstation/publicid/blob/master/publicid.go#L31>)
