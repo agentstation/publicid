@@ -5,6 +5,7 @@ package publicid
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -121,6 +122,22 @@ func TestNewFailsAfterAttempts(t *testing.T) {
 		expectedErrMsg := "failed to generate ID after 3 attempts: mocked error"
 		if err.Error() != expectedErrMsg {
 			t.Errorf("Expected error message '%s', but got '%s'", expectedErrMsg, err.Error())
+		}
+	}
+}
+
+func TestNewWithCustomAlphabet(t *testing.T) {
+	customAlphabet := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	id, err := New(Alphabet(customAlphabet))
+	if err != nil {
+		t.Errorf("New(Alphabet(%q)) returned an error: %v", customAlphabet, err)
+	}
+	if len(id) != DefaultIDLength {
+		t.Errorf("New(Alphabet(%q)) returned id with length %d, want %d", customAlphabet, len(id), DefaultIDLength)
+	}
+	for _, char := range id {
+		if !strings.ContainsRune(customAlphabet, char) {
+			t.Errorf("New(Alphabet(%q)) returned id containing invalid character: %c", customAlphabet, char)
 		}
 	}
 }
