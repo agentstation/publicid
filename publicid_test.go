@@ -47,7 +47,7 @@ func TestLong(t *testing.T) {
 	}
 }
 
-func TestLongWithAttempts(t *testing.T) {
+func TestNewLongWithAttempts(t *testing.T) {
 	id, err := New(Long(), Attempts(5))
 	if err != nil {
 		t.Errorf("New(Long(), Attempts(5)) returned an error: %v", err)
