@@ -9,9 +9,19 @@ import (
 )
 
 const (
-	alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-	longLen  = 12
-	shortLen = 8
+	// DefaultAlphabet is the set of characters used for generating public IDs.
+	// It includes 0-9, A-Z, and a-z, providing a balance between uniqueness and readability.
+	DefaultAlphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+	// DefaultIDLength is the default length for public IDs.
+	// Set to 8 characters, it provides a 1% collision probability after generating
+	// 8 billion IDs at 25 IDs/hour over approximately 10 years, assuming the use of DefaultAlphabet.
+	DefaultIDLength = 8
+
+	// LongIDLength is the length for long public IDs.
+	// Set to 12 characters, it provides a 1% collision probability after generating
+	// 8 billion IDs at 25 IDs/second over approximately 10 years, assuming the use of DefaultAlphabet.
+	LongIDLength = 12
 )
 
 // generator is the function used to generate nanoIDs.
@@ -35,10 +45,15 @@ func Attempts(n int) Option {
 }
 
 // Len returns an Option to set the length of the ID to be generated.
-func Len(n int) Option {
+func Len(len int) Option {
 	return func(c *config) {
-		c.length = n
+		c.length = len
 	}
+}
+
+// Long returns an Option to set the length of the ID to be generated to 12.
+func Long() Option {
+	return Len(LongIDLength)
 }
 
 // Alphabet returns an Option to set the alphabet to be used for ID generation.
@@ -49,15 +64,15 @@ func Alphabet(a string) Option {
 }
 
 // New generates a unique nanoID with a length of 8 characters and the given options.
-func New(opts ...Option) (string, error) { return generateID(shortLen, opts...) }
+func New(opts ...Option) (string, error) { return generateID(DefaultIDLength, opts...) }
 
 // NewLong generates a unique nanoID with a length of 12 characters and the given options.
-func NewLong(opts ...Option) (string, error) { return generateID(longLen, opts...) }
+func NewLong(opts ...Option) (string, error) { return generateID(LongIDLength, opts...) }
 
 // generateID is a helper function to generate IDs with the given length and options.
-func generateID(length int, opts ...Option) (string, error) {
+func generateID(len int, opts ...Option) (string, error) {
 	// set default configuration values
-	cfg := &config{attempts: 1, length: length, alphabet: alphabet}
+	cfg := &config{attempts: 1, length: len, alphabet: DefaultAlphabet}
 	for _, opt := range opts {
 		opt(cfg)
 	}
@@ -76,11 +91,16 @@ func generateID(length int, opts ...Option) (string, error) {
 
 // Validate checks if a given field name's public ID value is valid according to
 // the constraints defined by package publicid.
-func Validate(id string) error { return validate(id, shortLen) }
+func Validate(id string) error { return validate(id, DefaultIDLength) }
 
 // validateLong checks if a given field name's public ID value is valid according to
 // the constraints defined by package publicid.
-func ValidateLong(id string) error { return validate(id, longLen) }
+func ValidateLong(id string) error { return validate(id, LongIDLength) }
+
+// isValidChar checks if a given character is a valid public ID character.
+func isValidChar(c rune) bool {
+	return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+}
 
 // validate checks if a given public ID value is valid.
 func validate(id string, expectedLen int) error {
@@ -96,9 +116,4 @@ func validate(id string, expectedLen int) error {
 		}
 	}
 	return nil // if we get here, the ID is valid
-}
-
-// isValidChar checks if a given character is a valid public ID character.
-func isValidChar(c rune) bool {
-	return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
 }

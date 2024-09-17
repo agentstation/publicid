@@ -28,12 +28,12 @@ The `publicid` package is designed to generate and validate unique, public-facin
 
 ### ID Lengths
 
-- Default/Short IDs: 8 characters
+- Default IDs: 8 characters
 - Long IDs: 12 characters
 
 ### Collision Resistance
 
-- Default/Short IDs: 1% collision probability after generating 8 billion IDs at 25 IDs/hour (~10 years)
+- Default IDs: 1% collision probability after generating 8 billion IDs at 25 IDs/hour (~10 years)
 - Long IDs: 1% collision probability after generating 8 billion IDs at 25 IDs/second (~10 years)
 
 ### Key Features
@@ -63,12 +63,12 @@ To use the `publicid` package in your Go code, follow these steps:
 import "github.com/agentstation/publicid"
 ```
 
-2. Generate a short public ID (8 characters):
+2. Generate a default public ID (8 characters):
 
 ```go
 id, _ := publicid.New()
-fmt.Println("Generated short public ID:", id)
-// Output: Generated short public ID: Ab3xY9pQ
+fmt.Println("Generated default public ID:", id)
+// Output: Generated default public ID: Ab3xY9pQ
 ```
 
 3. Generate a long public ID (12 characters):
@@ -87,17 +87,17 @@ fmt.Println("Generated public ID within 5 attempts:", id)
 // Output: Generated public ID within 5 attempts: Kj2mN8qL
 ```
 
-5. Validate a short public ID:
+5. Validate a default public ID:
 
 ```go
-shortID := "Ab3xY9pQ"
-err := publicid.Validate(shortID)
+defaultID := "Ab3xY9pQ"
+err := publicid.Validate(defaultID)
 if err != nil {
-    fmt.Println("Invalid short ID:", err)
+    fmt.Println("Invalid default ID:", err)
 } else {
-    fmt.Println("Valid short ID:", shortID)
+    fmt.Println("Valid default ID:", defaultID)
 }
-// Output: Valid short ID: Ab3xY9pQ
+// Output: Valid default ID: Ab3xY9pQ
 ```
 
 6. Validate a long public ID:
@@ -127,6 +127,7 @@ Package publicid generates and validates NanoID strings designed to be publicly 
 
 ## Index
 
+- [Constants](<#constants>)
 - [func New\(opts ...Option\) \(string, error\)](<#New>)
 - [func NewLong\(opts ...Option\) \(string, error\)](<#NewLong>)
 - [func Validate\(id string\) error](<#Validate>)
@@ -134,11 +135,34 @@ Package publicid generates and validates NanoID strings designed to be publicly 
 - [type Option](<#Option>)
   - [func Alphabet\(a string\) Option](<#Alphabet>)
   - [func Attempts\(n int\) Option](<#Attempts>)
-  - [func Len\(n int\) Option](<#Len>)
+  - [func Len\(len int\) Option](<#Len>)
+  - [func Long\(\) Option](<#Long>)
 
+
+## Constants
+
+<a name="DefaultAlphabet"></a>
+
+```go
+const (
+    // DefaultAlphabet is the set of characters used for generating public IDs.
+    // It includes 0-9, A-Z, and a-z, providing a balance between uniqueness and readability.
+    DefaultAlphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+    // DefaultIDLength is the default length for public IDs.
+    // Set to 8 characters, it provides a 1% collision probability after generating
+    // 8 billion IDs at 25 IDs/hour over approximately 10 years, assuming the use of DefaultAlphabet.
+    DefaultIDLength = 8
+
+    // LongIDLength is the length for long public IDs.
+    // Set to 12 characters, it provides a 1% collision probability after generating
+    // 8 billion IDs at 25 IDs/second over approximately 10 years, assuming the use of DefaultAlphabet.
+    LongIDLength = 12
+)
+```
 
 <a name="New"></a>
-## func [New](<https://github.com/agentstation/publicid/blob/master/publicid.go#L52>)
+## func [New](<https://github.com/agentstation/publicid/blob/master/publicid.go#L67>)
 
 ```go
 func New(opts ...Option) (string, error)
@@ -147,7 +171,7 @@ func New(opts ...Option) (string, error)
 New generates a unique nanoID with a length of 8 characters and the given options.
 
 <a name="NewLong"></a>
-## func [NewLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L55>)
+## func [NewLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L70>)
 
 ```go
 func NewLong(opts ...Option) (string, error)
@@ -156,7 +180,7 @@ func NewLong(opts ...Option) (string, error)
 NewLong generates a unique nanoID with a length of 12 characters and the given options.
 
 <a name="Validate"></a>
-## func [Validate](<https://github.com/agentstation/publicid/blob/master/publicid.go#L79>)
+## func [Validate](<https://github.com/agentstation/publicid/blob/master/publicid.go#L94>)
 
 ```go
 func Validate(id string) error
@@ -165,7 +189,7 @@ func Validate(id string) error
 Validate checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
 
 <a name="ValidateLong"></a>
-## func [ValidateLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L83>)
+## func [ValidateLong](<https://github.com/agentstation/publicid/blob/master/publicid.go#L98>)
 
 ```go
 func ValidateLong(id string) error
@@ -174,7 +198,7 @@ func ValidateLong(id string) error
 validateLong checks if a given field name's public ID value is valid according to the constraints defined by package publicid.
 
 <a name="Option"></a>
-## type [Option](<https://github.com/agentstation/publicid/blob/master/publicid.go#L21>)
+## type [Option](<https://github.com/agentstation/publicid/blob/master/publicid.go#L31>)
 
 Option is a function type for configuring ID generation.
 
@@ -183,7 +207,7 @@ type Option func(*config)
 ```
 
 <a name="Alphabet"></a>
-### func [Alphabet](<https://github.com/agentstation/publicid/blob/master/publicid.go#L45>)
+### func [Alphabet](<https://github.com/agentstation/publicid/blob/master/publicid.go#L60>)
 
 ```go
 func Alphabet(a string) Option
@@ -192,7 +216,7 @@ func Alphabet(a string) Option
 Alphabet returns an Option to set the alphabet to be used for ID generation.
 
 <a name="Attempts"></a>
-### func [Attempts](<https://github.com/agentstation/publicid/blob/master/publicid.go#L31>)
+### func [Attempts](<https://github.com/agentstation/publicid/blob/master/publicid.go#L41>)
 
 ```go
 func Attempts(n int) Option
@@ -201,13 +225,22 @@ func Attempts(n int) Option
 Attempts returns an Option to set the number of attempts for ID generation.
 
 <a name="Len"></a>
-### func [Len](<https://github.com/agentstation/publicid/blob/master/publicid.go#L38>)
+### func [Len](<https://github.com/agentstation/publicid/blob/master/publicid.go#L48>)
 
 ```go
-func Len(n int) Option
+func Len(len int) Option
 ```
 
 Len returns an Option to set the length of the ID to be generated.
+
+<a name="Long"></a>
+### func [Long](<https://github.com/agentstation/publicid/blob/master/publicid.go#L55>)
+
+```go
+func Long() Option
+```
+
+Long returns an Option to set the length of the ID to be generated to 12.
 
 Generated by [gomarkdoc](<https://github.com/princjef/gomarkdoc>)
 
