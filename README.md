@@ -74,7 +74,7 @@ fmt.Println("Generated default public ID:", id)
 3. Generate a long public ID (12 characters):
 
 ```go
-longID, _ := publicid.New(publicid.Long())
+longID, _ := publicid.New(publicid.Long)
 fmt.Println("Generated long public ID:", longID)
 // Output: Generated long public ID: 7Zt3xY9pQr5W
 ```
@@ -104,7 +104,7 @@ if err != nil {
 
 ```go
 longID := "7Zt3xY9pQr5W"
-err := publicid.Validate(longID, publicid.Long())
+err := publicid.Validate(longID, publicid.Long)
 if err != nil {
     fmt.Println("Invalid long ID:", err)
 } else {
