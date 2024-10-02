@@ -26,7 +26,7 @@ func BenchmarkNewWithAttempts(b *testing.B) {
 
 func BenchmarkLong(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_, err := publicid.New(publicid.Long())
+		_, err := publicid.New(publicid.Long)
 		if err != nil {
 			b.Fatal(err)
 		}
@@ -35,7 +35,7 @@ func BenchmarkLong(b *testing.B) {
 
 func BenchmarkLongWithAttempts(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_, err := publicid.New(publicid.Long(), publicid.Attempts(5))
+		_, err := publicid.New(publicid.Long, publicid.Attempts(5))
 		if err != nil {
 			b.Fatal(err)
 		}
@@ -57,13 +57,13 @@ func BenchmarkValidate(b *testing.B) {
 }
 
 func BenchmarkValidateLong(b *testing.B) {
-	id, err := publicid.New(publicid.Long())
+	id, err := publicid.New(publicid.Long)
 	if err != nil {
 		b.Fatal(err)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		err := publicid.Validate(id, publicid.Long())
+		err := publicid.Validate(id, publicid.Long)
 		if err != nil {
 			b.Fatal(err)
 		}

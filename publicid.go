@@ -52,9 +52,7 @@ func Len(len int) Option {
 }
 
 // Long returns an Option to set the length of the ID to be generated to 12.
-func Long() Option {
-	return Len(LongIDLength)
-}
+var Long Option = Len(LongIDLength)
 
 // Alphabet returns an Option to set the alphabet to be used for ID generation.
 func Alphabet(a string) Option {

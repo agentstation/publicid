@@ -36,27 +36,27 @@ func TestNewWithAttempts(t *testing.T) {
 }
 
 func TestLong(t *testing.T) {
-	id, err := New(Long())
+	id, err := New(Long)
 	if err != nil {
 		t.Errorf("New(Long()) returned an error: %v", err)
 	}
 	if len(id) != LongIDLength {
 		t.Errorf("New(Long()) returned id with length %d, want %d", len(id), LongIDLength)
 	}
-	if err := Validate(id, Long()); err != nil {
+	if err := Validate(id, Long); err != nil {
 		t.Errorf("New(Long()) returned invalid id: %v", err)
 	}
 }
 
 func TestNewLongWithAttempts(t *testing.T) {
-	id, err := New(Long(), Attempts(5))
+	id, err := New(Long, Attempts(5))
 	if err != nil {
 		t.Errorf("New(Long(), Attempts(5)) returned an error: %v", err)
 	}
 	if len(id) != LongIDLength {
 		t.Errorf("New(Long(), Attempts(5)) returned id with length %d, want %d", len(id), LongIDLength)
 	}
-	if err := Validate(id, Long()); err != nil {
+	if err := Validate(id, Long); err != nil {
 		t.Errorf("New(Long(), Attempts(5)) returned invalid id: %v", err)
 	}
 }
@@ -83,13 +83,13 @@ func TestValidate(t *testing.T) {
 		wantError bool
 	}{
 		{"Valid Default ID", "abCD1234", nil, false},
-		{"Valid Long ID", "abCD1234EFGH", []Option{Long()}, false},
+		{"Valid Long ID", "abCD1234EFGH", []Option{Long}, false},
 		{"Valid Custom Length ID", "abCD123456", []Option{Len(10)}, false},
 		{"Empty ID", "", nil, true},
 		{"Short ID", "abc123", nil, true},
 		{"Long ID", "abcDEF123456", nil, true},
 		{"Invalid char", "abCD12_4", nil, true},
-		{"Invalid Long ID", "abCD1234EF", []Option{Long()}, true},
+		{"Invalid Long ID", "abCD1234EF", []Option{Long}, true},
 	}
 
 	for _, tc := range testCases {
